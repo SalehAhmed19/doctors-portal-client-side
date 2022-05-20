@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  useSignInWithGoogle,
   useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
-import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
-import Loading from "../Shared/Loading";
 import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
+import Loading from "../Shared/Loading";
 
-const Login = () => {
+const Signup = () => {
   const {
     register,
     formState: { errors },
@@ -44,6 +44,29 @@ const Login = () => {
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Login</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Your Name</span>
+              </label>
+              <input
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is required",
+                  },
+                })}
+                type="text"
+                placeholder="Your Name"
+                className="input input-bordered w-full max-w-xs"
+              />
+              <label className="label">
+                {errors.name?.type === "required" && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
+              </label>
+            </div>
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -113,9 +136,9 @@ const Login = () => {
           </form>
           <p className="text-center">
             <small>
-              New to Doctors Portal?{" "}
-              <Link to="/signup" className="text-secondary">
-                Create new account
+              Already have an account?{" "}
+              <Link to="/login" className="text-secondary">
+                Login
               </Link>
             </small>
           </p>
@@ -132,4 +155,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
