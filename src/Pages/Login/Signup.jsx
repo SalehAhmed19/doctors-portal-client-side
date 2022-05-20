@@ -1,10 +1,11 @@
 import React from "react";
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../Shared/Loading";
 
@@ -15,28 +16,31 @@ const Signup = () => {
     handleSubmit,
   } = useForm();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWitEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   let signInErrorMessage;
-
-  if (loading || gLoading) {
+  const navigate = useNavigate();
+  if (loading || gLoading || updating) {
     return <Loading />;
   }
   if (user || gUser) {
     console.log(user || gUser);
   }
-  if (error || gError) {
+  if (error || gError || updateError) {
     signInErrorMessage = (
       <p>
         <small className="text-red-500">
-          {error?.message || gError?.message}
+          {error?.message || gError?.message || updateError?.message}
         </small>
       </p>
     );
   }
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    signInWithEmailAndPassword(data.email, data.password);
+    await createUserWitEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    navigate("/appointment");
   };
   return (
     <div className="flex items-center justify-center h-screen">
@@ -132,7 +136,7 @@ const Signup = () => {
               </label>
             </div>
             {signInErrorMessage}
-            <input className="btn w-full" type="submit" value="Login" />
+            <input className="btn w-full" type="submit" value="Sign Up" />
           </form>
           <p className="text-center">
             <small>

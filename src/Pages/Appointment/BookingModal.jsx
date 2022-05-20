@@ -1,8 +1,11 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { _id, name, slots } = treatment;
+  const [user] = useAuthState(auth);
   const handleBooking = (event) => {
     event.preventDefault();
     const slot = event.target.slot.value;
@@ -19,7 +22,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
         <div className="modal-box">
           <label
             for="booking-modal"
-            class="btn btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
           </label>
@@ -33,16 +36,19 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               disabled
             />
             <select name="slot" className="select select-bordered w-full">
-              {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
+              {slots.map((slot, index) => (
+                <option key={index} value={slot}>
+                  {slot}
+                </option>
               ))}
             </select>
             <input
               className="border block h-12 w-full pl-5 rounded-md my-3"
               type="text"
-              placeholder="Enter your name"
+              value={user?.displayName || ""}
               name="clientName"
               required
+              disabled
             />
             <input
               className="border block h-12 w-full pl-5 rounded-md my-3"
@@ -54,9 +60,10 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             <input
               className="border block h-12 w-full pl-5 rounded-md my-3"
               type="email"
-              placeholder="Enter your email"
+              value={user?.email || ""}
               name="email"
               required
+              disabled
             />
             <div className="modal-action">
               <input
