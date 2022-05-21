@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
@@ -12,8 +13,30 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     const clientName = event.target.clientName.value;
     const phone = event.target.phone.value;
     const email = event.target.email.value;
-    console.log(_id, name, slot, clientName, phone, email);
-    setTreatment(null);
+    const formatedDate = format(date, "PP");
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formatedDate,
+      slot: slot,
+      patient: user.displayName,
+      email: email,
+      phone: phone,
+    };
+    fetch("http://localhost:4000/booking", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast(`Appointment is set, ${formatedDate} at ${slot}!`);
+        } else {
+          console.log("Already booked: " + data.booking);
+        }
+        setTreatment(null);
+      });
   };
   return (
     <div>
@@ -21,7 +44,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <label
-            for="booking-modal"
+            htmlFor="booking-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -52,18 +75,18 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             />
             <input
               className="border block h-12 w-full pl-5 rounded-md my-3"
-              type="text"
-              placeholder="Enter your phone number"
-              name="phone"
-              required
-            />
-            <input
-              className="border block h-12 w-full pl-5 rounded-md my-3"
               type="email"
               value={user?.email || ""}
               name="email"
               required
               disabled
+            />
+            <input
+              className="border block h-12 w-full pl-5 rounded-md my-3"
+              type="text"
+              placeholder="Enter your phone number"
+              name="phone"
+              required
             />
             <div className="modal-action">
               <input
