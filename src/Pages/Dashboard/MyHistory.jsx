@@ -3,7 +3,7 @@ import React from "react";
 const MyHistory = () => {
   return (
     <div>
-      <h2>Treatment History</h2>
+      <h2 className="text-2xl">Treatment History</h2>
     </div>
   );
 };

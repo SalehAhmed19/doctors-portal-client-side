@@ -9,6 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const logout = async () => {
     await signOut(auth);
+    localStorage.removeItem("accessToken");
     await navigate("/");
   };
   const menuItem = (
