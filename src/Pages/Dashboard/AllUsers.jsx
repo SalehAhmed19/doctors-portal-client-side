@@ -7,7 +7,7 @@ const AllUsers = () => {
   const {
     data: users,
     isLoading,
-    isError,
+    refetch,
   } = useQuery("users", () =>
     fetch(`http://localhost:4000/user`, {
       method: "GET",
@@ -34,7 +34,7 @@ const AllUsers = () => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <UserRow key={user._id} user={user}></UserRow>
+              <UserRow key={user._id} user={user} refetch={refetch}></UserRow>
             ))}
           </tbody>
         </table>
