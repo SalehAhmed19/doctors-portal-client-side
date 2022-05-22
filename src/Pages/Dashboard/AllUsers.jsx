@@ -28,8 +28,8 @@ const AllUsers = () => {
             <tr>
               <th></th>
               <th>User Email</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

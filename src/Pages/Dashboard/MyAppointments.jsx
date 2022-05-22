@@ -24,7 +24,9 @@ const MyAppointments = () => {
           }
           return res.json();
         })
-        .then((data) => setAppointments(data));
+        .then((data) => {
+          setAppointments(data);
+        });
     }
   }, [user]);
   return (
