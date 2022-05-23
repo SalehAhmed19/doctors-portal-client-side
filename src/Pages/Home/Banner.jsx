@@ -13,7 +13,11 @@ const Banner = () => {
       className="hero min-h-screen"
     >
       <div className="hero-content flex-col lg:flex-row-reverse p-0">
-        <img src={chair} className="max-w-sm w-full rounded-lg shadow-2xl" />
+        <img
+          src={chair}
+          className="max-w-sm w-full rounded-lg shadow-2xl"
+          alt=""
+        />
         <div className="px-6">
           <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
           <p className="py-6">

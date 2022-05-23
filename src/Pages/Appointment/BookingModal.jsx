@@ -24,7 +24,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
       email: email,
       phone: phone,
     };
-    fetch("http://localhost:4000/booking", {
+    fetch("https://floating-thicket-06747.herokuapp.com/booking", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(booking),
