@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import About from "./Pages/About/About";
 import Appointment from "./Pages/Appointment/Appointment";
+import AddDoctor from "./Pages/Dashboard/AddDoctor";
 import AllUsers from "./Pages/Dashboard/AllUsers";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import MyAppointments from "./Pages/Dashboard/MyAppointments";
@@ -47,6 +48,14 @@ function App() {
             element={
               <ReqireAdmin>
                 <AllUsers />
+              </ReqireAdmin>
+            }
+          ></Route>
+          <Route
+            path="add-doctor"
+            element={
+              <ReqireAdmin>
+                <AddDoctor />
               </ReqireAdmin>
             }
           ></Route>

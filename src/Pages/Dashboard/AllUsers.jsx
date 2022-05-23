@@ -21,14 +21,15 @@ const AllUsers = () => {
   }
   return (
     <div>
-      <h2 className="text-xl font-bold">All Users {users.length}</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th></th>
               <th>User Email</th>
-              <th></th>
+              <th>
+                <h2 className="font-bold">All Users {users.length}</h2>
+              </th>
               <th></th>
             </tr>
           </thead>
