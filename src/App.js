@@ -12,6 +12,7 @@ import MyReview from "./Pages/Dashboard/MyReview";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import ReqireAuth from "./Pages/Login/ReqireAuth";
+import ReqireAdmin from "./Pages/Login/RequireAdmin";
 import Signup from "./Pages/Login/Signup";
 import Navbar from "./Pages/Shared/Navbar";
 
@@ -41,7 +42,14 @@ function App() {
           <Route index element={<MyAppointments />}></Route>
           <Route path="review" element={<MyReview />}></Route>
           <Route path="history" element={<MyHistory />}></Route>
-          <Route path="users" element={<AllUsers />}></Route>
+          <Route
+            path="users"
+            element={
+              <ReqireAdmin>
+                <AllUsers />
+              </ReqireAdmin>
+            }
+          ></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
